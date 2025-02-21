@@ -8,7 +8,6 @@ from tkinter import messagebox
 
 # Retrieve the API key from the environment variable
 api_key = os.getenv("AGENTQL_API_KEY")
-print(api_key)
 
 if not api_key:
     raise ValueError("API Key not found! Please set the AGENTQL_API_KEY environment variable.")
@@ -28,6 +27,7 @@ LOGIN_QUERY = """
 }
 """
 
+# Invoke Browser
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=False)
     page = agentql.wrap(browser.new_page())  # Use the API key here
@@ -48,6 +48,7 @@ with sync_playwright() as p:
     # Wait for demo purposes
     page.wait_for_timeout(5000)
 
-    messagebox.showinfo("Information", "This is a message box!")
+    # commented , incase you want keep browser open before you close , un comment this line
+    #messagebox.showinfo("Information", "This is a message box!")
 
     browser.close()
